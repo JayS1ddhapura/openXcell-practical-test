@@ -39,7 +39,7 @@ exports.signup = async (req, res) => {
             gender
         })
         const token = utils.generateToken(user.id, user.username)
-        res.status(201).send({ status: true, message: 'User successfully registered.', token: token })
+        res.status(201).send({ status: true, message: 'User successfully registered.', access_token: token })
     } catch (e) {
         console.log(e)
         res.send({ status: false, message: e.message })
@@ -73,8 +73,15 @@ exports.login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).send({ status: false, message: 'Incorrect password.' })
         }
+        var userDisplay = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            email: user.email,
+            gender: user.gender,
+        }
         const token = utils.generateToken(user.id, user.username)
-        res.status(200).send({ status: true, message: 'Successfully logged in.', token })
+        res.status(200).send({ status: true, message: 'Successfully logged in.', user: userDisplay, access_token: token })
     } catch (e) {
         console.log(e)
         res.send({ status: false, message: e.message })

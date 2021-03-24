@@ -1,10 +1,11 @@
 const express = require('express')
 const router = require('./src/routes/user-routes')
 require('dotenv').config()
-require('./db/connection').sync({ alter: true })
+require('./db/connection').sync()
 
 // routers import
 const userRouter = require('./src/routes/user-routes')
+const topicRouter = require('./src/routes/topic-routes')
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // routers
 app.use('/users', userRouter)
+app.use('/topics', topicRouter)
 
 app.listen(process.env.PORT, () => {
     console.log(`server is up on port ${process.env.PORT}`)
