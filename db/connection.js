@@ -1,4 +1,4 @@
-const {Sequelize} = require('sequelize')
+const { Sequelize } = require('sequelize')
 const env = process.env.NODE_ENV || 'development'
 const config = require('../src/config/config.json')[env]
 
@@ -14,3 +14,5 @@ try {
 } catch (error) {
     console.error('Unable to connect to the database:', error);
 }
+
+module.exports = sequelize
