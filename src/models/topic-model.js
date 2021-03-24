@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize')
 const User = require('./user-model')
 
 const Topic = sequelize.define('Topic', {
-    topicTitle: {
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true
