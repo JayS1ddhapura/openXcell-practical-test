@@ -29,7 +29,7 @@ exports.signup = async (req, res) => {
             return res.status(400).send({ status: false, message: 'Please enter valid email.' })
         }
 
-        const hashedPassword = await utils.hashPassword(password, parseInt(process.env.SALT))
+        const hashedPassword = await utils.hashPassword(password, 8)
         const user = await User.create({
             firstName,
             lastName,
