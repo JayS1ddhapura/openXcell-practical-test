@@ -1,8 +1,9 @@
 const User = require('../models/user-model')
-const bcrypt = require('bcrypt')
+const Post = require('../models/post-model')
 const utils = require('../utils/utils')
 require('dotenv').config()
 const { Op } = require('sequelize')
+
 
 exports.signup = async (req, res) => {
     try {
@@ -82,6 +83,23 @@ exports.login = async (req, res) => {
         }
         const token = utils.generateToken(user.id, user.username)
         res.status(200).send({ status: true, message: 'Successfully logged in.', user: userDisplay, access_token: token })
+    } catch (e) {
+        console.log(e)
+        res.send({ status: false, message: e.message })
+    }
+}
+
+exports.profile = async (req, res) => {
+    try {
+        const user = await User.findOne({
+            where: { id: req.user.id },
+            attributes: ['id', 'firstName', 'lastName', 'username', 'email', 'DOB', 'gender'],
+            include: {
+                model: Post,
+                attributes: ['postTitle', 'content', 'TopicTitle']
+            }
+        })
+        res.status(200).send({ status: true, message: 'User profile and posts successfully fetched.', user })
     } catch (e) {
         console.log(e)
         res.send({ status: false, message: e.message })

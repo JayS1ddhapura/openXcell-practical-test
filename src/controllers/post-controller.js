@@ -14,7 +14,7 @@ exports.createPost = async (req, res) => {
             return res.status(404).send({ status: false, message: 'Topic not found.' })
         }
 
-        const post = await Post.create({ ...req.body })
+        const post = await Post.create({ ...req.body, UserId: req.user.id })
         res.status(201).send({ status: true, message: 'Post successfully created.', post })
     } catch (e) {
         console.log(e)
